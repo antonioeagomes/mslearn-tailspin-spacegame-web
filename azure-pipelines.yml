@@ -11,7 +11,39 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  wwwrootDirectory: 'Tailspin.SpaceGame.Web/wwwroot'
+  projects: '**/*.csproj'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- task: UseDotNet@2
+  displayName: 'Use .Net 6.x'
+  inputs:
+    packageType: sdk
+    version: '6.x'
+- task: Npm@1
+  displayName: 'Run npm install'
+  inputs:
+    verbose: false
+
+- script: './node_modules/.bin/node-sass $(wwwrootDirectory) --output $(wwwrootDirectory)'
+  displayName: 'Compile Sass'
+
+- task: gulp@1
+  displayName: 'Executa o gulp'
+
+- script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt'
+  displayName: 'Write build info'
+  workingDirectory: $(wwwrootDirectory)
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore dependencies'
+  inputs:
+    command: restore
+    projects: projects
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build - Release'
+  inputs:
+    command: build
+    arguments: '--no-restore --configuration $(buildConfiguration)'
+    projects: projects

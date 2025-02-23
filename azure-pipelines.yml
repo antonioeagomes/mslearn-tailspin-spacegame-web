@@ -12,7 +12,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   wwwrootDirectory: 'Tailspin.SpaceGame.Web/wwwroot'
-  projects: '**/*.csproj'
+  projects: '**/*.sln'
 
 steps:
 - task: UseDotNet@2
@@ -47,3 +47,15 @@ steps:
     command: build
     arguments: '--no-restore --configuration $(buildConfiguration)'
     projects: projects
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  inputs:
+    command: publish
+    projects: $(projects)
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Release'
+    zipAfterPublish: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifact: drop'
+  condition: succeed()

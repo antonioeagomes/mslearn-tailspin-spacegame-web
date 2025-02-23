@@ -18,7 +18,7 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use .Net 6.x'
   inputs:
-    packageType: sdk
+    packageType: 'sdk'
     version: '6.x'
 - task: Npm@1
   displayName: 'Run npm install'
@@ -39,11 +39,11 @@ steps:
   displayName: 'Restore dependencies'
   inputs:
     command: restore
-    projects: projects
+    projects: $(projects)
 
 - task: DotNetCoreCLI@2
   displayName: 'Build - Release'
   inputs:
     command: build
     arguments: '--no-restore --configuration $(buildConfiguration)'
-    projects: projects
+    projects: $(projects)

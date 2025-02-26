@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/broccolis/SpaceGame%20-%20Workflow/_apis/build/status%2Fazure-pipeline-cd?branchName=main)](https://dev.azure.com/broccolis/SpaceGame%20-%20Workflow/_build/latest?definitionId=23&branchName=main)
 
 # Contributing
 

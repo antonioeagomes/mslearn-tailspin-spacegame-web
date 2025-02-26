@@ -22,7 +22,7 @@ steps:
   inputs:
     verbose: false
 
-- script: './node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)'
+- script: 'npx sass $(wwwrootDir) --source-map'
   displayName: 'Compile Sass assets'
 
 - task: gulp@1

@@ -8,8 +8,4 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\avatars\" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ReportGenerator" Version="5.4.4" />
-  </ItemGroup>
 </Project>
